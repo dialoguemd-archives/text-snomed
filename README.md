@@ -1,7 +1,7 @@
 # text-snomed
-The Project on extracting SNOMED CT concepts from free-form text
+Extracting SNOMED CT concepts from free-form text.
 
-# Usage
+# Usage of MetaMap extractor
 1. You first have to follow this [guide](https://metamap.nlm.nih.gov/Installation.shtml) to install the MetaMap to your local computer.
 
 2. In `metamap.py` you provide the following parameters:
