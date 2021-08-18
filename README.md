@@ -26,5 +26,11 @@ timeout=50 #Timeout for extraction
 
 
 **Important**: MetaMap18 does not rcognize non-ASCII characters. So if you're using MetaMap18, you need to convert it using [this](https://metamap.nlm.nih.gov/ReplaceUTF8.shtml). MetaMap20 already has this issue taken care of. But it's safe to always convert your `CLINICAL_TEXT_FILE` first. 
-> If you set `CONVERT_UTF8` to True, it prints the code for the conversion on your terminal
+> If you set `CONVERT_UTF8` to True, it prints the code for the conversion on your terminal.e 
+
+The `pymm` folder is my adaptation of [this repository](https://github.com/smujjiga/pymm).
+
+
+- - - -
+Correspondence to chris.emezue@gmail.com
 
