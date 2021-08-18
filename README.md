@@ -18,7 +18,7 @@ CONVERT_UTF8=True
 use_only_snomed=True #Whether or not to use only SNOMED CT in MetaMap extraction
 timeout=50 #Timeout for extraction
 ```
-`METAMAP_PATH` refers to the path to the MetaMap (ending in `<parent directory>/bin/metamap`).  
+`METAMAP_PATH` refers to the path to the MetaMap (ending in `/bin/metamap`).  
 
 `SEMANTIC_FILE_PATH` is the path to [this file](https://metamap.nlm.nih.gov/Docs/SemanticTypes_2018AB.txt).
 
