@@ -2,34 +2,36 @@ import os
 from pymm import Metamap
 import subprocess
 
+METAMAP_PATH = '<PATH TO METAMAP>'
+CLINICAL_TEXT_FILE = '<PATH TO CLINICAL TEXT FILE>'
+COMPRESSED_FILE = '<Where to save the compressed form of MetaMap output>'
+SEMANTIC_FILE_PATH = '<PATH TO SEMANTIC FILE>' #This file contains the full meanings of the semantic abbreviations given in the MetaMap output. 
 
-
-filename ='rsample1.txt'   
 METAMAP_VERSION = '2020' 
 DEBUG=False
 CONVERT_UTF8=True
-use_only_snomed=False
+use_only_snomed=True #Whether or not to use only SNOMED CT in MetaMap extraction
+timeout=50 #Timeout for extraction
+
 
 if use_only_snomed:
     print('Using only SNOMED CT for extraction...')
-DIR = 'C:/Users/USER/Desktop/MASTERS/MILA/DIALOGUE/public_mm_win32_main_2014/public_mm/bin/'
-DIR_FOR_RANDOM = '/mnt/c/Users/USER/Desktop/MASTERS/MILA/DIALOGUE/random/'   
-CLINICAL_TEXT_FILE = os.path.join(DIR_FOR_RANDOM,filename)
-output_file = f"/mnt/c/Users/USER/Desktop/MASTERS/MILA/DIALOGUE/random/metamap_output{filename.split('.txt')[0][-1]}.txt"
-input_file = '/mnt/c/Users/USER/Desktop/MASTERS/MILA/DIALOGUE/random/metamap_input.txt'
+
+DIR = '<DIR where CLINICAL_TEXT_FILE is located>'
+
+
+output_file = os.path.join(DIR,'metamap_output.txt') #This is where the MetaMap (XML for now) output will be saved. TO DO: Use JSON instead.
+input_file = output_file = os.path.join(DIR,'metamap_input.txt') #No need to change this. Nothing happens with it.
 
 if METAMAP_VERSION=='2018':
     #For MetaMap 2018
-    mm = Metamap('/mnt/c/Users/USER/Desktop/MASTERS/MILA/DIALOGUE/publiclinuxmain2018/publicmm/bin/metamap18',output_file,input_file,use_only_snomed,debug=DEBUG)
+    mm = Metamap(METAMAP_PATH,output_file,input_file,use_only_snomed,debug=DEBUG)
 elif METAMAP_VERSION=='2020':
     #For MetaMap 2020
-    mm = Metamap('/mnt/c/Users/USER/Desktop/MASTERS/MILA/DIALOGUE/public_mm/bin/metamap20',output_file,input_file,use_only_snomed,debug=DEBUG)
+    mm = Metamap(METAMAP_PATH,output_file,input_file,use_only_snomed,debug=DEBUG)
 else:
     raise Exception(f'For now we only have METAMAP 2018 and 2020!')
 
-COMPRESSED_FILE = os.path.join(DIR_FOR_RANDOM,f"metamap_compressed{filename.split('.txt')[0][-1]}.txt")
-
-timeout=50
 
 
 def conv_command(input_file):
@@ -74,7 +76,7 @@ def save(concept,sem_dict):
 
 print('Loading sematic types abbreviations...')
 sem_dict={}
-with open('SemanticTypes.txt','r') as f:
+with open(SEMANTIC_FILE_PATH,'r') as f:
     sem = f.readlines()
     for s in sem:
         sem_dict.update({s.split('|')[0].strip():s.split('|')[2].strip()})
@@ -102,48 +104,11 @@ for idx, mmo in enumerate(mmos):
         save(concept,sem_dict)
 print("Status: Done...") 
 print('ALL DONE')   
-'''    
-BATCH_SIZE = 32
-last_checkpoint=0
-#try:
-for i, sentences in enumerate(read_lines(CLINICAL_TEXT_FILE, last_checkpoint, BATCH_SIZE)):
-    print(sentences)
-    timeout = 0.33*BATCH_SIZE
-    try_again = False
-    #try:
-    mmos = mm.parse(sentences, timeout=timeout)
-    
-    except MetamapStuck:
-        # Try with larger timeout
-        print ("Metamap Stuck !!!; trying with larger timeout")
-        try_again = True
-    except Exception:
-        print ("Exception in mm; skipping the batch")
-        #traceback.print_exc(file=sys.stdout)
-        continue
-    
 
-    if try_again:
-        timeout = BATCH_SIZE*2
-        try:
-            mmos = mm.parse(sentences, timeout=timeout)
-        except MetamapStuck:
-            # Again stuck; Ignore this batch
-            print ("Metamap Stuck again !!!; ignoring the batch")
-            continue
-        except Exception:
-            print ("Exception in mm; skipping the batch")
-            #traceback.print_exc(file=sys.stdout)
-            continue
-    
-    for idx, mmo in enumerate(mmos):
-        for jdx, concept in enumerate(mmo):
-            print(sentences[idx])
-            save(sentences[idx], concept)
 
-    curr_checkpoint = (i+1)*BATCH_SIZE + last_checkpoint
-    record_checkpoint(curr_checkpoint)
-'''   
+
+
+
 
 #/mnt/c/Users/USER/Desktop/MASTERS/MILA/DIALOGUE/publiclinuxmain2018/publicmm/bin/metamap18 -c -Q 4 -y -K --sldi -I --XMLf1 --negex /mnt/c/Users/USER/Desktop/MASTERS/MILA/DIALOGUE/random/rsample3clean.txt /mnt/c/Users/USER/Desktop/MASTERS/MILA/DIALOGUE/random/metamap_output.txt
    
