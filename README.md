@@ -3,9 +3,9 @@ Extracting SNOMED CT concepts from free-form text.
 
 # Usage of MetaMap extractor
 1. You first have to follow this [guide](https://metamap.nlm.nih.gov/Installation.shtml) to install the MetaMap to your local computer. Also, start the `SKR/Medpost Part-of-Speech Tagger Server` and the `Word Sense Disambiguation (WSD) Server`
-2. Then set up `my_pymm` by doing the following:
+2. Then set up `pymm` by downloading it [here](https://drive.google.com/drive/folders/1sd9vmx49SxYncOoC2AXLPudO3lo5p5VH?usp=sharing) doing the following:
   ```
-  cd my_pymm
+  cd pymm
   python setup.py install
   ```
 
@@ -33,7 +33,7 @@ timeout=50 #Timeout for extraction
 **Important**: MetaMap18 does not rcognize non-ASCII characters. So if you're using MetaMap18, you need to convert it using [this](https://metamap.nlm.nih.gov/ReplaceUTF8.shtml). MetaMap20 already has this issue taken care of. But it's safe to always convert your `CLINICAL_TEXT_FILE` first. 
 > If you set `CONVERT_UTF8` to True, it prints the code for the conversion on your terminal.e 
 
-The `my_pymm` folder is my adaptation of [this repository](https://github.com/smujjiga/pymm).
+The `pymm` folder is my adaptation of [this repository](https://github.com/smujjiga/pymm).
 
 
 - - - -
