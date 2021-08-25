@@ -1,0 +1,3 @@
+[submodule "mypymm"]
+	path = mypymm
+	url = https://github.com/chrisemezue/pymm
