@@ -1,0 +1,12 @@
+Metadata-Version: 1.1
+Name: pymm
+Version: 0.0.post0.dev12+g47d228b.dirty
+Summary: Python Wrapper for MetaMap
+Home-page: https://github.com/smujjiga/pymm
+Author: Srikanth Mujjiga
+Author-email: smujjiga@outlook.com
+License: mit
+Description: UNKNOWN
+Platform: any
+Classifier: Development Status :: 4 - Beta
+Classifier: Programming Language :: Python
