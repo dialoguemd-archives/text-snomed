@@ -1,5 +1,0 @@
-setuptools>=30.3.0
-
-[all]
-cookiecutter
-django
