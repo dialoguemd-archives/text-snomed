@@ -13,7 +13,37 @@ Here is my guide to my work on building SNOMED expressions from patient record d
 ### Pre-requisites
 1. Create and activate a virtual environment.
 2. Install the [requirements.txt](https://drive.google.com/file/d/1SZ1qNXVaqiibt8OOXmZYqcnqC5HtX_qY/view?usp=sharing) file.
+### Preprocessing the patient records
+The first - and most important prerequisite - is to pre-process the patient records. This is important for the Metamap to capture the correct medical concept. 
 
+This is handled by the `preprocess.py` file.
+```python
+'''
+This takes the following arguments
+--file or -f
+    path to CSV file with the patient records, just like the one given for this project.
+    Each row is a patient record.
+--output_dir or -o
+    Optional. Directory to save the preprocessed patient records. If not given, then the current working directory is used.
+--check_lang or -l
+    Default False.
+    Whether or not to check the language of the patient record. If True, the language code ('en','fr','undefined') will be appended to the patient file
+    
+--columns or -c
+    Columns to use from the CSV files for the patient records. Should be a string with columns seperated by |
+    For example, if you want to consider the 'CONCERN', 'HISTORY' and 'PHYSICAL_EXAM' columns then pass:
+    -- columns 'CONCERN|HISTORY|PHYSICAL_EXAM'
+    
+    If the columns are not passed, it uses the default columns: 'CONCERN|HISTORY|ASSESSMENT_AND_PLAN|PHYSICAL_EXAM|DX_DESCRIPTIONS'
+--txt or -t
+    Default False.
+    Set to true if your patient records are in TXT files instead of CSV with columns.
+    
+--keep_only_en or -e
+    Default False
+    Whether or not to keep only patient records detected as English
+'''
+```
 3. In `metamap.py` you provide the following parameters:
 
 ```python
