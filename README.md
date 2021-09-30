@@ -1,13 +1,18 @@
 # text-snomed
 Extracting SNOMED CT concepts from free-form text.
 
-# Usage of MetaMap extractor
+## Usage of MetaMap extractor
 1. You first have to follow this [guide](https://metamap.nlm.nih.gov/Installation.shtml) to install the MetaMap to your local computer. Also, start the `SKR/Medpost Part-of-Speech Tagger Server` and the `Word Sense Disambiguation (WSD) Server`
 2. Set up `pymm` by downloading it [here](https://github.com/chrisemezue/pymm) and doing the following:
   ```
   cd pymm
   python setup.py install
   ```
+## Using text-snomed
+Here is my guide to my work on building SNOMED expressions from patient record data. The guide is divided into sections, with files that wrap functionalities together.
+### Pre-requisites
+1. Create and activate a virtual environment.
+2. Install the [requirements.txt](https://drive.google.com/file/d/1SZ1qNXVaqiibt8OOXmZYqcnqC5HtX_qY/view?usp=sharing) file.
 
 3. In `metamap.py` you provide the following parameters:
 
