@@ -59,7 +59,7 @@ python metamap.py --patient_record /mnt/c/Users/USER/Desktop/MASTERS/MILA/DIALOG
 ```
 
 ```python
-ABOUT = '''
+'''
 This takes the following arguments
 --patient_record or -p
     path to patient record file or a directory containing patient files.
@@ -91,6 +91,13 @@ This takes the following arguments
     
 '''
 ```
+1. - Before the patient record file is passed to Metamap, all its non-ASCII characters should be replaced with its ASCII equivalent using the [replaceutf8 jar file](https://lhncbc.nlm.nih.gov/ii/tools/MetaMap/additional-tools/ReplaceUTF8.html) provided by Metamap. We wrapped everything conveniently in the program so you don't have to do anything. The TEMP directory is used to store the temporary files from the replaceutf8 command. You can decide to keep them if you want using the `--keep_temp` argument.
+2. You must start the SKR/Medpost Part-of-Speech Tagger Server and the Word Sense Disambiguation (WSD) Server (optional) before running this.
+
+### SnomedClassifier
+SnomedClassifier is the model built and trained to identify the relationship between a medical phrase and the extracted medical concepts. The model architecture is inspired by [this paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7233039/).
+1. I used `dmis-lab/biobert-base-cased-v1.2` pretrained weights for the embedding representation. This is a pretrained [BioBert](https://academic.oup.com/bioinformatics/article/36/4/1234/5566506) model, further finetuned on PubMed 1M dataset. Further details about the model can be found [here](https://github.com/dmis-lab/biobert).
+2. I froze the embedding model during training, so that SnomedClassifier only updates the weights of the BiLSTM and fully-connected layers.
 
 ```python
 METAMAP_PATH = '<PATH TO METAMAP>'
