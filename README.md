@@ -10,10 +10,10 @@ Extracting SNOMED CT concepts from free-form text.
   ```
 ## Using text-snomed
 Here is my guide to my work on building SNOMED expressions from patient record data. The guide is divided into sections, with files that wrap functionalities together.
-### Pre-requisites
+### 1. Pre-requisites
 1. Create and activate a virtual environment.
 2. Install the [requirements.txt](https://drive.google.com/file/d/1SZ1qNXVaqiibt8OOXmZYqcnqC5HtX_qY/view?usp=sharing) file.
-### Preprocessing the patient records
+### 2. Preprocessing the patient records
 The first - and most important prerequisite - is to pre-process the patient records. This is important for the Metamap to capture the correct medical concept. 
 
 This is handled by the `preprocess.py` file.
@@ -52,7 +52,7 @@ This takes the following arguments
 python preprocess.py --file <PATIENT FILE OR DIRECTORY> --output_dir ./data/output/ --check_lang
 ```
 
-### Extracting medical concepts from patient records with Metamap
+### 3. Extracting medical concepts from patient records with Metamap
 This is handled by the `metamap.py` file.
 ```bash
 python metamap.py --patient_record /mnt/c/Users/USER/Desktop/MASTERS/MILA/DIALOGUE/data/output/patient6_en.txt --metamap /mnt/c/Users/USER/Desktop/MASTERS/MILA/DIALOGUE/public_mm/bin/metamap20 --output_dir /mnt/c/Users/USER/Desktop/PRETTY --parse --keep_temp
@@ -91,34 +91,38 @@ This takes the following arguments
     
 '''
 ```
-1. - Before the patient record file is passed to Metamap, all its non-ASCII characters should be replaced with its ASCII equivalent using the [replaceutf8 jar file](https://lhncbc.nlm.nih.gov/ii/tools/MetaMap/additional-tools/ReplaceUTF8.html) provided by Metamap. We wrapped everything conveniently in the program so you don't have to do anything. The TEMP directory is used to store the temporary files from the replaceutf8 command. You can decide to keep them if you want using the `--keep_temp` argument.
+1. Before the patient record file is passed to Metamap, all its non-ASCII characters should be replaced with its ASCII equivalent using the [replaceutf8 jar file](https://lhncbc.nlm.nih.gov/ii/tools/MetaMap/additional-tools/ReplaceUTF8.html) provided by Metamap. We wrapped everything conveniently in the program so you don't have to do anything. The TEMP directory is used to store the temporary files from the replaceutf8 command. You can decide to keep them if you want using the `--keep_temp` argument.
 2. You must start the SKR/Medpost Part-of-Speech Tagger Server and the Word Sense Disambiguation (WSD) Server (optional) before running this.
 
-### SnomedClassifier
+### 4. SnomedClassifier
 SnomedClassifier is the model built and trained to identify the relationship between a medical phrase and the extracted medical concepts. The model architecture is inspired by [this paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7233039/).
 1. I used `dmis-lab/biobert-base-cased-v1.2` pretrained weights for the embedding representation. This is a pretrained [BioBert](https://academic.oup.com/bioinformatics/article/36/4/1234/5566506) model, further finetuned on PubMed 1M dataset. Further details about the model can be found [here](https://github.com/dmis-lab/biobert).
 2. I froze the embedding model during training, so that SnomedClassifier only updates the weights of the BiLSTM and fully-connected layers.
 
 ![model](https://user-images.githubusercontent.com/36100251/135483949-e34bd44c-a90b-43c1-aaf6-a7a07a990c2d.png)
 
-```python
-METAMAP_PATH = '<PATH TO METAMAP>'
-CLINICAL_TEXT_FILE = '<PATH TO CLINICAL TEXT FILE>'
-COMPRESSED_FILE = '<Where to save the compressed form of MetaMap output>'
-SEMANTIC_FILE_PATH = '<PATH TO SEMANTIC FILE>' #This file contains the full meanings of the semantic abbreviations given in the MetaMap output. 
-
-METAMAP_VERSION = '2020' #[Option of 2020 or 2018. You have to install the correct MetaMap for the version you choose]
-DEBUG=False
-CONVERT_UTF8=True
-use_only_snomed=True #Whether or not to use only SNOMED CT in MetaMap extraction
-timeout=50 #Timeout for extraction
+### 5. Building SNOMED expression with predicted relationships
+This takes the SnomedClassifier model and extracted Metamap output files (from `metamap.py`)  and builds the SNOMED expression for each utterance. This is handled by the `build_expression.py` file.
+```bash
+python build_expression.py --file /content/sample10008_enconv.json --ckpt /content/drive/MyDrive/dialogue/train/model_best.pt --class_map /content/drive/MyDrive/dialogue/train/classmap.json
 ```
-`METAMAP_PATH` refers to the path to the MetaMap (ending in `/bin/metamap`).  
 
-`SEMANTIC_FILE_PATH` is the path to [this file](https://metamap.nlm.nih.gov/Docs/SemanticTypes_2018AB.txt).
+```python
+'''
+This takes the following arguments
+--file or -f
+    Parsed output file from Metamap or directory containing the files.
+--ckpt or -c
+    Model checkpoint
+--output_dir or -o
+    Optional. Directory to save the expressions. If not given, then the parent directory of --file will be used.
+--class_map or -l
+    The class map JSON file. Required.
+'''
+```
+This saves your SNOMED expressions in a folder inside the--output_dir after the operation.
 
-4. Run `metamap.py`
-
+---
 
 **Important**: MetaMap18 does not rcognize non-ASCII characters. So if you're using MetaMap18, you need to convert it using [this](https://metamap.nlm.nih.gov/ReplaceUTF8.shtml). MetaMap20 already has this issue taken care of. But it's safe to always convert your `CLINICAL_TEXT_FILE` first. 
 > If you set `CONVERT_UTF8` to True, it prints the code for the conversion on your terminal.e 
