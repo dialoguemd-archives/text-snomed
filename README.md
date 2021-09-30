@@ -44,7 +44,13 @@ This takes the following arguments
     Whether or not to keep only patient records detected as English
 '''
 ```
-3. In `metamap.py` you provide the following parameters:
+1. The function above creates a *patient record* by merging the columns specified by`--columns` then pre-processing them.
+2. The`--check_lang` will give you approximate language in the patient record.
+3. Another  important thing the function does is to separate each sentence (or independent information about the patient) line by line. This helps Metamap better extract the medical concepts.
+
+```bash
+python preprocess.py --file <PATIENT FILE OR DIRECTORY> --output_dir ./data/output/ --check_lang
+```
 
 ```python
 METAMAP_PATH = '<PATH TO METAMAP>'
