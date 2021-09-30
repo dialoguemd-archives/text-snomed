@@ -99,6 +99,8 @@ SnomedClassifier is the model built and trained to identify the relationship bet
 1. I used `dmis-lab/biobert-base-cased-v1.2` pretrained weights for the embedding representation. This is a pretrained [BioBert](https://academic.oup.com/bioinformatics/article/36/4/1234/5566506) model, further finetuned on PubMed 1M dataset. Further details about the model can be found [here](https://github.com/dmis-lab/biobert).
 2. I froze the embedding model during training, so that SnomedClassifier only updates the weights of the BiLSTM and fully-connected layers.
 
+![model](https://user-images.githubusercontent.com/36100251/135483949-e34bd44c-a90b-43c1-aaf6-a7a07a990c2d.png)
+
 ```python
 METAMAP_PATH = '<PATH TO METAMAP>'
 CLINICAL_TEXT_FILE = '<PATH TO CLINICAL TEXT FILE>'
