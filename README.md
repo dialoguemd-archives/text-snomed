@@ -52,6 +52,46 @@ This takes the following arguments
 python preprocess.py --file <PATIENT FILE OR DIRECTORY> --output_dir ./data/output/ --check_lang
 ```
 
+### Extracting medical concepts from patient records with Metamap
+This is handled by the `metamap.py` file.
+```bash
+python metamap.py --patient_record /mnt/c/Users/USER/Desktop/MASTERS/MILA/DIALOGUE/data/output/patient6_en.txt --metamap /mnt/c/Users/USER/Desktop/MASTERS/MILA/DIALOGUE/public_mm/bin/metamap20 --output_dir /mnt/c/Users/USER/Desktop/PRETTY --parse --keep_temp
+```
+
+```python
+ABOUT = '''
+This takes the following arguments
+--patient_record or -p
+    path to patient record file or a directory containing patient files.
+--output_dir or -o
+    Optional. Directory to save the JSON-parsed Metamap output.
+   
+--metamap or -m
+    Metamap path. 
+
+--mmi or -i
+    Whether or not to use MMI.
+    Default: False.
+    If you set this to True, then --parse should be False and vice versa.
+  
+--parse or -j
+    Whether or not to parse the metamap output into a JSON output.
+    Default: False
+--use_neg or -n
+    Whether or not to consider the negative markers when parsing.
+    Default: False
+    
+--keep_temp or -k:
+    Keep TEMP directory.
+    Default: False.
+    If False, the TEMP directory will be deleted after operation.
+--use_multiprocessing or -m
+    Default False
+    Whether or not to use multiprocessing
+    
+'''
+```
+
 ```python
 METAMAP_PATH = '<PATH TO METAMAP>'
 CLINICAL_TEXT_FILE = '<PATH TO CLINICAL TEXT FILE>'
