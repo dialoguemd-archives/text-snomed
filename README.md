@@ -102,6 +102,8 @@ SnomedClassifier is the model built and trained to identify the relationship bet
 
 ![model](https://user-images.githubusercontent.com/36100251/135483949-e34bd44c-a90b-43c1-aaf6-a7a07a990c2d.png)
 
+3. The best model weights, parameters and optimizer values canbe found [here](https://drive.google.com/drive/folders/1GGKSU4Jt6f12cFoyPGYFCYz4ZwOLtSid?usp=sharing).
+
 ### 5. Building SNOMED expression with predicted relationships
 This takes the SnomedClassifier model and extracted Metamap output files (from `metamap.py`)  and builds the SNOMED expression for each utterance. This is handled by the `build_expression.py` file.
 ```bash
