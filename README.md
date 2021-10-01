@@ -117,14 +117,14 @@ This takes the following arguments
 --file or -f
     Parsed output file from Metamap or directory containing the files.
 --ckpt or -c
-    Model checkpoint
+    Model checkpoint file. In [here](https://drive.google.com/drive/folders/1GGKSU4Jt6f12cFoyPGYFCYz4ZwOLtSid?usp=sharing), it is `model.pt`
 --output_dir or -o
     Optional. Directory to save the expressions. If not given, then the parent directory of --file will be used.
 --class_map or -l
     The class map JSON file. Required.
 '''
 ```
-This saves your SNOMED expressions in a folder inside the--output_dir after the operation.
+This saves your SNOMED expressions in a folder inside the `--output_dir` after the operation.
 
 ---
 
