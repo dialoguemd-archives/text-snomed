@@ -9,7 +9,7 @@ Extracting SNOMED CT concepts from free-form text.
   python setup.py install
   ```
 ## Using text-snomed
-Here is my guide to my work on building SNOMED expressions from patient record data. The guide is divided into sections, with files that wrap functionalities together. There is also an implementation of some of the steps in Colab: ![[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1YgwazMzoCFxR5rbXyBqsQdK4_JuGtOBp?usp=sharing)
+Here is my guide to my work on building SNOMED expressions from patient record data. The guide is divided into sections, with files that wrap functionalities together. There is also an implementation of some of the steps in Colab: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1YgwazMzoCFxR5rbXyBqsQdK4_JuGtOBp?usp=sharing)
 
 ### 1. Pre-requisites
 1. Create and activate a virtual environment.
