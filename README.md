@@ -94,6 +94,7 @@ This takes the following arguments
 ```
 1. Before the patient record file is passed to Metamap, all its non-ASCII characters should be replaced with its ASCII equivalent using the [replaceutf8 jar file](https://lhncbc.nlm.nih.gov/ii/tools/MetaMap/additional-tools/ReplaceUTF8.html) provided by Metamap. We wrapped everything conveniently in the program so you don't have to do anything. The TEMP directory is used to store the temporary files from the replaceutf8 command. You can decide to keep them if you want using the `--keep_temp` argument.
 2. You must start the SKR/Medpost Part-of-Speech Tagger Server and the Word Sense Disambiguation (WSD) Server (optional) before running this.
+3. The `--use_multiprocessing` feature enables faster performance.
 
 ### 4. SnomedClassifier
 SnomedClassifier is the model built and trained to identify the relationship between a medical phrase and the extracted medical concepts. The model architecture is inspired by [this paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7233039/).
